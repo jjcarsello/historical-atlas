@@ -1,0 +1,82 @@
+:host {
+  display: block;
+  position: fixed;
+  inset: 0;
+}
+
+.title {
+  top: 16px;
+  left: 16px;
+
+  h1 {
+    margin: 0;
+    font-family: var(--serif);
+    font-size: 1.1rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .year {
+    margin: 2px 0 4px;
+    font-family: var(--serif);
+    font-size: 2.6rem;
+    font-weight: 600;
+    line-height: 1.1;
+  }
+
+  p { margin: 0; }
+}
+
+.panel {
+  top: 16px;
+  right: 60px;
+  width: 340px;
+  max-height: calc(100% - 150px);
+  overflow-y: auto;
+}
+
+.timeline {
+  left: 16px;
+  right: 16px;
+  bottom: 28px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+
+  .controls { display: flex; gap: 6px; }
+  .play { min-width: 72px; }
+  .track { flex: 1; min-width: 0; }
+
+  input[type='range'] {
+    width: 100%;
+    accent-color: var(--accent);
+  }
+
+  .ends {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.75rem;
+    color: var(--muted);
+  }
+}
+
+@media (max-width: 640px) {
+  .title .year { font-size: 1.8rem; }
+
+  .panel {
+    top: auto;
+    left: 16px;
+    right: 16px;
+    bottom: 120px;
+    width: auto;
+    max-height: 45%;
+  }
+
+  .timeline {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 8px;
+
+    .controls { justify-content: center; }
+  }
+}

@@ -1,0 +1,51 @@
+<app-atlas-map
+  [borders]="borders()"
+  [selectedName]="selected()?.NAME ?? null"
+  (entitySelect)="selected.set($event)"
+/>
+
+<header class="card title">
+  <h1>Historical Atlas</h1>
+  <p class="year">{{ formatYear(snapshot().year) }}</p>
+  @if (loading()) {
+    <p class="muted">Loading borders…</p>
+  } @else if (error()) {
+    <p class="error">{{ error() }}</p>
+  } @else {
+    <p class="muted">Click a territory to learn about it</p>
+  }
+</header>
+
+@if (selected(); as entity) {
+  <aside class="card panel">
+    <app-entity-panel
+      [entity]="entity"
+      [present]="selectedPresent()"
+      [yearLabel]="formatYear(snapshot().year)"
+      (closed)="selected.set(null)"
+    />
+  </aside>
+}
+
+<footer class="card timeline">
+  <div class="controls">
+    <button type="button" aria-label="Previous year" (click)="step(-1)" [disabled]="index() === 0">‹</button>
+    <button type="button" class="play" (click)="togglePlay()">{{ playing() ? 'Pause' : 'Play' }}</button>
+    <button type="button" aria-label="Next year" (click)="step(1)" [disabled]="index() === snapshots.length - 1">›</button>
+  </div>
+  <div class="track">
+    <input
+      type="range"
+      min="0"
+      [max]="snapshots.length - 1"
+      [value]="index()"
+      (input)="onSlider($event)"
+      aria-label="Year"
+      [attr.aria-valuetext]="formatYear(snapshot().year)"
+    />
+    <div class="ends">
+      <span>{{ formatYear(snapshots[0].year) }}</span>
+      <span>{{ formatYear(snapshots[snapshots.length - 1].year) }}</span>
+    </div>
+  </div>
+</footer>
